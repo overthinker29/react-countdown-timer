@@ -22,7 +22,8 @@ var CountdownTimer = React.createClass({
     interval: React.PropTypes.number,
     formatFunc: React.PropTypes.func,
     tickCallback: React.PropTypes.func,
-    completeCallback: React.PropTypes.func
+    completeCallback: React.PropTypes.func,
+    shouldReplayTimer: React.PropTypes.bool,
   },
 
   getDefaultProps: function() {
@@ -45,8 +46,11 @@ var CountdownTimer = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps, oldProps) {
-    if (this.state.timeoutId) clearTimeout(this.state.timeoutId);
-    this.setState({ prevTime: undefined, timeRemaining: newProps.initialTimeRemaining });
+    //shouldReplayTimer is false if you want to run the counter only once
+    if(this.props.shouldReplayTimer){
+      if (this.state.timeoutId) clearTimeout(this.state.timeoutId);
+      this.setState({ prevTime: undefined, timeRemaining: newProps.initialTimeRemaining });
+    }
   },
 
   componentDidMount: function() {
