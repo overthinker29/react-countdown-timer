@@ -32,6 +32,7 @@ var CountdownTimer = React.createClass({
       formatFunc: undefined,
       tickCallback: undefined,
       completeCallback: undefined,
+      shouldReplayTimer: true,
     };
   },
 
