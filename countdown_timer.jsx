@@ -29,9 +29,9 @@ var CountdownTimer = React.createClass({
   getDefaultProps: function() {
     return {
       interval: 1000,
-      formatFunc: undefined,
-      tickCallback: undefined,
-      completeCallback: undefined,
+      formatFunc: null,
+      tickCallback: null,
+      completeCallback: null,
       shouldReplayTimer: true,
     };
   },
@@ -41,17 +41,14 @@ var CountdownTimer = React.createClass({
     // but these are all initializations (not an anti-pattern).
     return {
       timeRemaining: this.props.initialTimeRemaining,
-      timeoutId: undefined,
-      prevTime: undefined
+      timeoutId: null,
+      prevTime: null,
     };
   },
 
   componentWillReceiveProps: function(newProps, oldProps) {
-    //shouldReplayTimer is false if you want to run the counter only once
-    if(this.props.shouldReplayTimer){
       if (this.state.timeoutId) clearTimeout(this.state.timeoutId);
       this.setState({ prevTime: undefined, timeRemaining: newProps.initialTimeRemaining });
-    }
   },
 
   componentDidMount: function() {
@@ -96,6 +93,7 @@ var CountdownTimer = React.createClass({
 
     if (countdownComplete) {
       if (this.props.completeCallback) { this.props.completeCallback() };
+      if(this.props.shouldReplayTimer){timeRemaining=this.props.initialTimeRemaining};
       return;
     }
 
